@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About - SensAI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+   ul {
+  list-style: none;
+  text-align: center;
+  margin: 40px 0;
+}
+
+ul li {
+  margin: 15px 0;
+}
+
+ul li a {
+  color: #fff;              /* white text */
+  text-decoration: none;    /* no underline */
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+ul li a:hover {
+  color: #00b4d8;           /* blue hover */
+}
+
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 15px;
+}
+
+.profile-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.profile-initial {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #00b4d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #000;
+}
+
+.profile-meta {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.profile-meta span {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .auth-actions {
+    flex-direction: column;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .profile-chip {
+    width: 100%;
+    justify-content: center;
+  }
+}
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+  <div class="logo"><a href="{{ url_for('home') }}">SENS<span>EI</span></a></div>
+  <button class="menu-toggle" id="menu-toggle">☰</button>
+  <div class="nav-links" id="nav-links">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('home') }}#contact">Contact</a>
+    <div class="auth-actions">
+      {% if user %}
+        <a href="{{ url_for('profile') }}" class="profile-chip">
+          <div class="profile-initial">{{ user.name[:1]|upper }}</div>
+          <div class="profile-meta">
+            <span>{{ user.name }}</span>
+            <small>{{ user.role }}</small>
+          </div>
+        </a>
+        <a href="{{ url_for('logout') }}" class="signin-btn">Logout</a>
+      {% else %}
+        <a href="{{ url_for('register') }}" class="signin-btn">Register</a>
+        <a href="{{ url_for('login') }}" class="signin-btn">Sign In</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+
+  <main class="page-content">
+    <section class="about-hero">
+      <h1>About SENSEI</h1>
+      <p>We are an AI-driven career coach that helps you prepare for interviews, build resumes, and navigate career growth with personalized guidance.</p>
+    </section>
+
+    <section class="team">
+      <h2>Our Mission</h2>
+      <p>To make professional coaching affordable and accessible using intelligent automation and tailored learning paths.</p>
+    </section>
+
+    <section class="values">
+      <h2>What We Offer</h2>
+      <ul>
+  <li><a href="{{ url_for('interview') }}">AI-Based Interview Practice</a></li>
+  <li><a href="{{ url_for('resume_form') }}">Resume Optimization</a></li>
+  <li><a href="{{ url_for('industry_insights') }}">Industry Insights & Skills Roadmaps</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 SensAI</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

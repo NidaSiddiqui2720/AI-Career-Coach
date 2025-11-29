@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Guidance Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(-45deg, #4158D0, #C850C0, #FFCC70, #0093E9);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+      overflow: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 50px 60px;
+      width: 550px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      transition: all 0.4s ease;
+    }
+
+    .form-container:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    h2 {
+      font-weight: 600;
+      margin-bottom: 25px;
+      font-size: 26px;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    input[type="text"], input[type="file"] {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      font-size: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      transition: 0.3s;
+    }
+
+    input[type="text"]:focus, input[type="file"]:focus {
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+      transform: scale(1.02);
+    }
+
+    .option-group {
+      margin: 15px 0;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 15px;
+      border-radius: 10px;
+    }
+
+    .option-group label {
+      color: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #4158D0, #C850C0);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #C850C0, #FFCC70);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #FFCC70;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Floating glow circles */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .circle.one { width: 120px; height: 120px; top: 10%; left: 10%; }
+    .circle.two { width: 90px; height: 90px; bottom: 15%; right: 15%; }
+    .circle.three { width: 150px; height: 150px; top: 25%; right: 25%; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+
+  <script>
+    function toggleInput(option) {
+      document.getElementById("manual-input").style.display = (option === "manual") ? "block" : "none";
+      document.getElementById("resume-input").style.display = (option === "resume") ? "block" : "none";
+    }
+  </script>
+</head>
+<body>
+  <div class="circle one"></div>
+  <div class="circle two"></div>
+  <div class="circle three"></div>
+
+  <div class="form-container">
+    <h2>✨ Student Guidance Form ✨</h2>
+    <!-- action changed to /career_form so it matches your Flask route -->
+   <form method="POST" action="{{ url_for('career_form') }}" enctype="multipart/form-data">
+
+      <input type="text" name="name" placeholder="Enter Your Name" required><br>
+
+      <div class="option-group">
+        <label><input type="radio" name="input_type" value="manual" onclick="toggleInput('manual')" checked> Enter Skills Manually</label>
+        <label><input type="radio" name="input_type" value="resume" onclick="toggleInput('resume')"> Upload Resume</label>
+      </div>
+
+      <div id="manual-input">
+        <input type="text" name="skills" placeholder="Enter Your Skills (comma separated)">
+      </div>
+
+      <div id="resume-input" class="hidden">
+        <input type="file" name="resume" accept=".pdf,.docx">
+      </div>
+
+      <button type="submit">🚀 Get Guidance</button>
+    </form>
+    <p><a href="/logout">Logout</a></p>
+  </div>
+</body>
+</html>

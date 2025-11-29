@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ subject or 'Interview' }} Q&A Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    :root {
+      --bg-start: #141e30;
+      --bg-end: #243b55;
+      --accent: #ffd700;
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --border-color: rgba(255, 255, 255, 0.2);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      color: #f5f5f5;
+      padding: 40px 20px 60px;
+    }
+    .dashboard {
+      max-width: 1200px;
+      margin: auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeDown 0.8s ease;
+    }
+    header h1 {
+      margin-bottom: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    header p {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .stat-card {
+      border-radius: 18px;
+      padding: 20px;
+      border: 1px solid var(--border-color);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+    .stat-card span {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .stat-card h3 {
+      margin: 12px 0 0;
+      font-size: 1.5rem;
+    }
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+    .tools input[type="search"] {
+      flex: 1;
+      min-width: 220px;
+      border-radius: 12px;
+      border: none;
+      padding: 12px 16px;
+      font-size: 15px;
+    }
+    .btn-glass {
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid var(--border-color);
+      color: white;
+      padding: 10px 18px;
+      font-weight: 500;
+      transition: transform 0.2s ease, background 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+      color: white;
+    }
+    .qa-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      border: 1px solid var(--border-color);
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      animation: fadeUp 0.6s ease;
+    }
+    .qa-card h4 {
+      margin-top: 0;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+    .qa-card p {
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.85);
+    }
+    .qa-card .actions {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .chip {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      border: 2px dashed rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+    }
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: rgba(0, 0, 0, 0.85);
+      padding: 12px 18px;
+      border-radius: 10px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .toast.show {
+      opacity: 1;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <header>
+      <p class="mb-2">Interview Readiness Board</p>
+      <h1>{{ subject or 'Selected Subject' }} — Q&A Collection</h1>
+      <p>
+        Generated {{ generated_at or 'just now' }} · powered by
+        <strong>{{ provider|title if provider else 'OpenAI' }}</strong>
+      </p>
+    </header>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span>Subject</span>
+        <h3>{{ subject or 'N/A' }}</h3>
+      </div>
+      <div class="stat-card">
+        <span>Total delivered</span>
+        <h3>{{ total_questions or 0 }} / {{ num_requested or total_questions }}</h3>
+      </div>
+      <div class="stat-card">
+        <span>Provider</span>
+        <h3>{{ provider|title if provider else 'OpenAI' }}</h3>
+      </div>
+      <div class="stat-card">
+        <span>Timestamp</span>
+        <h3>{{ generated_at or 'Now' }}</h3>
+      </div>
+    </section>
+
+    <section class="tools">
+      <input id="qaSearch" type="search" placeholder="Filter questions by keyword…">
+      <div class="d-flex gap-2 flex-wrap">
+        <button id="copyAll" class="btn-glass" type="button">Copy all Q&A</button>
+        <a href="{{ url_for('interview') }}" class="btn-glass">Choose another subject</a>
+      </div>
+    </section>
+
+    {% if questions %}
+      <section id="qaList">
+        {% for q, a in questions %}
+          <article class="qa-card" data-search="{{ (q ~ ' ' ~ a)|lower }}">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+              <h4>Q{{ "%02d"|format(loop.index) }} · {{ q }}</h4>
+              <span class="chip">Rank {{ loop.index }}</span>
+            </div>
+            <p>{{ a }}</p>
+            <div class="actions">
+              <button class="btn-glass copy-btn" data-question="{{ q|e }}" data-answer="{{ a|e }}">Copy answer</button>
+            </div>
+          </article>
+        {% endfor %}
+      </section>
+    {% else %}
+      <div class="empty-state">
+        <h3>No questions generated yet</h3>
+        <p>Return to the selector and request interview prompts for your subject.</p>
+        <a href="{{ url_for('interview') }}" class="btn-glass mt-3 d-inline-block">Back to subject list</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="toast" id="toast">Copied to clipboard</div>
+
+  <script>
+    const qaSearch = document.getElementById("qaSearch");
+    const qaList = document.getElementById("qaList");
+    const toast = document.getElementById("toast");
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    qaSearch?.addEventListener("input", (event) => {
+      const term = event.target.value.trim().toLowerCase();
+      const cards = qaList?.querySelectorAll(".qa-card") || [];
+      cards.forEach(card => {
+        const haystack = card.dataset.search || "";
+        const matches = haystack.includes(term);
+        card.style.display = matches ? "block" : "none";
+      });
+    });
+
+    document.querySelectorAll(".copy-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const text = `Q: ${btn.dataset.question}\nA: ${btn.dataset.answer}`;
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("Answer copied!");
+        }).catch(() => {
+          showToast("Copy failed");
+        });
+      });
+    });
+
+    document.getElementById("copyAll")?.addEventListener("click", () => {
+      const bundle = [...document.querySelectorAll(".qa-card")].map((card, idx) => {
+        const question = card.querySelector("h4")?.textContent || `Question ${idx + 1}`;
+        const answer = card.querySelector("p")?.textContent || "";
+        return `${question}\n${answer}`;
+      }).join("\n\n");
+      if (!bundle.trim()) {
+        showToast("Nothing to copy");
+        return;
+      }
+      navigator.clipboard.writeText(bundle).then(() => {
+        showToast("All Q&A copied!");
+      }).catch(() => showToast("Copy failed"));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SensAI - Your AI Career Coach</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background-color: #000;
+  border-bottom: 1px solid #333;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: white;
+}
+
+.logo span {
+  color: aqua;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #00b4d8;
+}
+
+.signin-btn {
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.signin-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 15px;
+}
+
+.profile-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.profile-initial {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #00b4d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #000;
+}
+
+.profile-meta {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.profile-meta span {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ===== MOBILE NAV ===== */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    top: 70px;
+    background: #111;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links a {
+    margin: 10px 0;
+  }
+
+  .auth-actions {
+    flex-direction: column;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .profile-chip {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ===== HERO ===== */
+
+
+
+/* ===== HERO SECTION ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background: 
+    linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.8)), 
+    url('static/background.jpg') center center / cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+}
+
+/* Centered Content */
+.hero-content {
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+/* Text Styling */
+.hero-content h1 {
+  font-size: 3rem;
+  line-height: 1.3;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  color: #f1f1f1;
+  margin-bottom: 35px;
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none; /* 👈 This removes the underline */
+  display: inline-block; /* 👈 ensures it behaves like a button */
+}
+
+
+/* Primary Button (Blue) */
+.btn.primary {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.btn.primary:hover {
+  background-color: #0056b3;
+}
+
+/* Secondary Button (Transparent) */
+.btn.secondary {
+  background: transparent;
+  border: 2px solid #fff;  /* 👈 white outline by default */
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 12px 30px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn.secondary:hover {
+  background: #00b4d8;  /* 👈 blue background on hover */
+  color: #000;          /* 👈 black text for contrast */
+  border-color: #00b4d8; /* 👈 border matches hover bg */
+}
+
+
+/* Fade-in animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.2s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+  }
+  .buttons {
+    flex-direction: column;
+  }
+}
+
+
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #000;
+  border-top: 1px solid #333;
+  font-size: 14px;
+  color: #999;
+  margin-top: 0; /* 👈 ensures footer sticks right below hero */
+}
+
+
+/* ===== ANIMATIONS ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible,
+.feature-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+</style>
+<body>
+
+  <!-- Navbar -->
+ <nav class="navbar">
+  <div class="logo">SENS<span>EI</span></div>
+  <button class="menu-toggle" id="menu-toggle">☰</button>
+  <div class="nav-links" id="nav-links">
+  <a href="{{ url_for('home') }}">Home</a>
+  <a href="{{ url_for('about') }}">About</a>
+  <a href="{{ url_for('features') }}">Features</a>
+  <a href="{{ url_for('contact') }}">Contact</a>
+  <div class="auth-actions">
+    {% if user %}
+      <a href="{{ url_for('profile') }}" class="profile-chip">
+        <div class="profile-initial">{{ user.name[:1]|upper }}</div>
+        <div class="profile-meta">
+          <span>{{ user.name }}</span>
+          <small>{{ user.role }}</small>
+        </div>
+      </a>
+      <a href="{{ url_for('logout') }}" class="signin-btn">Logout</a>
+    {% else %}
+      <a href="{{ url_for('register') }}" class="signin-btn">Register</a>
+      <a href="{{ url_for('login') }}" class="signin-btn">Sign In</a>
+    {% endif %}
+  </div>
+  </div>
+</nav>
+
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content fade-in">
+      <h1>Your AI Career Coach for <br> Professional Success</h1>
+      <p>Advance your career with personalized guidance, interview prep, and AI-powered tools for job success.</p>
+      <div class="buttons">
+     <a href="{{ url_for('features') }}" class="btn primary">Get Started</a>
+     <a href="{{ url_for('demo') }}" class="btn secondary">Watch Demo</a>
+      </div>
+
+    </div>
+  </section>
+
+  
+  <!-- Footer -->
+  <footer id="contact">
+    <p>© 2025 SensAI. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Use - AI Career Coach</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: white;
+      overflow-x: hidden;
+      padding: 50px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 60px;
+      font-size: 2.5rem;
+      color: #00bcd4;
+    }
+
+    .steps-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 80px;
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      width: 300px;
+      min-height: 200px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+
+    .step:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    }
+
+    .step h2 {
+      font-size: 1.6rem;
+      color: #00e5ff;
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #e0f7fa;
+    }
+
+    .arrow {
+      width: 60px;
+      height: 60px;
+      border-right: 4px solid #00e5ff;
+      border-bottom: 4px solid #00e5ff;
+      transform: rotate(-45deg);
+      margin: 0 auto;
+      position: relative;
+      top: 40px;
+      animation: blink 1.5s infinite alternate;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn-primary {
+      background: #4f46e5;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #333;
+    }
+
+     .btn-tersary {
+      background: #e5e7eb;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+  background: #3b82f6; /* blue color */
+  color: white;         /* text turns white for contrast */
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+
+
+    @keyframes blink {
+      from { opacity: 0.5; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 1000px) {
+      .steps-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .arrow {
+        transform: rotate(45deg);
+        top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🚀 How to Use AI Career Coach</h1>
+
+  <div class="steps-container">
+    <div class="step">
+      <h2>Step 1: Go to Home Page</h2>
+      <p>Start by visiting the home page of our AI Career Coach. You’ll find options like “Sign In” and “Learn More.”</p>
+    </div>
+    <div class="arrow"></div>
+
+    <div class="step">
+      <h2>Step 2: Click on Sign In</h2>
+      <p>Click the “Sign In” button on the home page to access the login page where you can enter your details.</p>
+    </div>
+    <div class="arrow"></div>
+
+    <div class="step">
+      <h2>Step 3: Login or Register</h2>
+      <p>If you already have an account, log in. If not, click “Register” to create a new account easily.</p>
+    </div>
+    <div class="arrow"></div>
+
+    <div class="step">
+      <h2>Step 4: View Your Profile</h2>
+      <p>Once logged in, you’ll be redirected to your personalized profile page showing your information and progress.</p>
+    </div>
+    <div class="arrow"></div>
+
+    <div class="step">
+      <h2>Step 5: Explore Features</h2>
+      <p>Now explore features like Resume Analyzer, Career Guidance, and Skill Improvement recommendations.</p>
+    </div>
+    <div class="arrow"></div>
+
+    <div class="step">
+      <h2>Step 6: Get AI Recommendations</h2>
+      <p>Based on your data, our AI provides personalized suggestions to help you build a better career path.</p>
+    </div>
+    <div class="arrow"></div>
+
+    <div class="step">
+      <h2>Step 7: Stay Updated</h2>
+      <p>Keep checking your dashboard for new AI insights and updates about your progress and opportunities.</p>
+    </div>
+    
+  </div>
+  <div class="buttons">
+        <a href="{{ url_for('features') }}"><button class="btn btn-primary">Get Started</button></a>
+        <a href="{{ url_for('image') }}"><button class="btn btn-secondary">Steps</button></a>
+        <a href="{{ url_for('home') }}"><button class="btn btn-secondary">Back to Home</button></a>
+        
+
+      </div>
+</body>
+</html>

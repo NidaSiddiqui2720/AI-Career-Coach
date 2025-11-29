@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Industry Insights</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Body and background */
+  body {
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+     background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Dark overlay */
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    top: 0; left: 0;
+    z-index: 1;
+  }
+
+  /* Main container */
+  .container {
+    position: relative;
+    z-index: 2;
+    background: rgba(255,255,255,0.95);
+    padding: 40px 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 550px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: slideUp 1s ease-in-out;
+  }
+
+  @keyframes slideUp {
+    0% { opacity: 0; transform: translateY(50px);}
+    100% { opacity: 1; transform: translateY(0);}
+  }
+
+  h2 {
+    margin-bottom: 25px;
+    color: #007BFF;
+    font-size: 24px;
+  }
+
+  input[type="text"] {
+    padding: 12px 15px;
+    width: 80%;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+  }
+
+  input[type="text"]:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0,123,255,0.3);
+  }
+
+  button {
+    padding: 12px 25px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(45deg, #007BFF, #00C6FF);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+  }
+
+  /* Result box hidden initially */
+  .result-box {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #f1f9ff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-box h3 {
+    margin-bottom: 10px;
+    color: #007BFF;
+  }
+
+  .result-box p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+  <h2>🔎 Check Industry Demand for Your Skill</h2>
+  <input type="text" id="skillInput" placeholder="Enter a skill, e.g., Python">
+  <br>
+  <button onclick="showResult()">Check Demand</button>
+
+  <div class="result-box" id="resultBox">
+    <h3>Demand for <span id="skillName"></span></h3>
+    <p>Current Demand: <span id="currentDemand"></span>%</p>
+    <p>Future Demand: <span id="futureDemand"></span>%</p>
+  </div>
+</div>
+
+<script>
+function showResult() {
+  const skill = document.getElementById('skillInput').value.trim();
+  if(skill === '') {
+    alert("Please enter a skill!");
+    return;
+  }
+
+  // Example: Replace with real data from backend
+  const current = Math.floor(Math.random() * 80) + 20; // 20-100%
+  const future = Math.floor(Math.random() * 80) + 20;
+
+  document.getElementById('skillName').innerText = skill;
+  document.getElementById('currentDemand').innerText = current;
+  document.getElementById('futureDemand').innerText = future;
+
+  document.getElementById('resultBox').style.display = 'block';
+}
+</script>
+
+</body>
+</html>

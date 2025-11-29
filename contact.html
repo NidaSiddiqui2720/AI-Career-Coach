@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact - SensAI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0a0a0f, #0d1b2a);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+    }
+
+    .logo a {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #4cc9f0;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #4cc9f0;
+    }
+
+    .contact-hero {
+      max-width: 600px;
+      margin: 10px auto;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .contact-hero h1 {
+      color: #4cc9f0;
+      margin-bottom: 10px;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .contact-hero p {
+      text-align: center;
+      color: #ddd;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input, textarea {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    button {
+      padding: 12px;
+      background: linear-gradient(90deg, #4cc9f0, #4361ee);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(90deg, #4361ee, #4cc9f0);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #aaa;
+      margin-top: 50px;
+    }
+
+    /* Thank You Animation */
+    .thank-you {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #4cc9f0;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .auth-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: 15px;
+    }
+
+    .profile-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .profile-initial {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #00b4d8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .profile-meta {
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .profile-meta span {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .auth-actions {
+        flex-direction: column;
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .profile-chip {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo"><a href="{{ url_for('home') }}">SENS<span>EI</span></a></div>
+    <div class="nav-links">
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="{{ url_for('contact') }}">Contact</a>
+      <div class="auth-actions">
+        {% if user %}
+          <a href="{{ url_for('profile') }}" class="profile-chip">
+            <div class="profile-initial">{{ user.name[:1]|upper }}</div>
+            <div class="profile-meta">
+              <span>{{ user.name }}</span>
+              <small>{{ user.role }}</small>
+            </div>
+          </a>
+          <a href="{{ url_for('logout') }}" class="signin-btn">Logout</a>
+        {% else %}
+          <a href="{{ url_for('register') }}" class="signin-btn">Register</a>
+          <a href="{{ url_for('login') }}" class="signin-btn">Sign In</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-content">
+    <section class="contact-hero">
+      <h1>Contact Us</h1>
+      <p>Have a question or want a demo? Send us a message.</p>
+
+      <form id="contact-form">
+        <input type="text" id="name" name="name" placeholder="Your name" required />
+        <input type="email" id="email" name="email" placeholder="Email address" required />
+        <input type="text" id="subject" name="subject" placeholder="Subject" />
+        <textarea id="message" name="message" placeholder="Your message" rows="6" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+
+      <div id="thank-you" class="thank-you" style="display: none;">
+        🎉 Thank you for your message! We’ll get back to you soon.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 SensAI. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('contact-form');
+    const thankYou = document.getElementById('thank-you');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); // Stop actual submission
+      form.style.display = 'none';
+      thankYou.style.display = 'block';
+    });
+  </script>
+</body>
+</html>

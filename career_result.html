@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Career Guidance Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .dashboard {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+            padding: 25px;
+            width: 85%;
+            max-width: 950px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+
+        h3 {
+            color: #007BFF;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 17px;
+        }
+
+        .welcome {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .career-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 18px;
+        }
+
+        .career-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            padding: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .career-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .section {
+            margin-bottom: 18px;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .skills-list span {
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .your-skills span { background: #e6f4ea; color: #28a745; }
+        .required-skills span { background: #fff8e1; color: #ff9800; }
+        .matched-skills span { background: #e3f2fd; color: #007bff; }
+        .missing-skills span { background: #fdecea; color: #dc3545; }
+
+        .trend-info {
+            display: flex;
+            justify-content: space-around;
+            background: #f1f9ff;
+            padding: 8px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .roadmap ul {
+            list-style: none;
+            padding: 0;
+            font-size: 13px;
+        }
+
+        .roadmap li {
+            background: #f9f9f9;
+            margin: 5px 0;
+            padding: 6px 10px;
+            border-radius: 8px;
+        }
+
+        .roadmap li a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .roadmap li a:hover {
+            text-decoration: underline;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 8px;
+            transition: 0.3s;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        .try-again { background: #007BFF; color: white; }
+        .logout { background: #dc3545; color: white; }
+        .buttons a:hover { transform: scale(1.05); }
+
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <h2>🎓 Career Guidance Dashboard</h2>
+        <div class="welcome">Welcome, <b>{{ name }}</b> 👋</div>
+
+        <div class="section your-skills">
+            <h3>✅ Your Skills</h3>
+            <div class="skills-list">
+                {% for skill in skills %}
+                    <span>{{ skill }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <h2>🎯 Top Career Suggestions</h2>
+
+        <!-- ✅ Show only top 2 matches -->
+        {% for career in career_matches[:2] %}
+        <div class="career-container">
+            <div class="career-card">
+                <h3>{{ loop.index }}. {{ career.career }} — {{ career.match_percent }}% Match</h3>
+                <div class="trend-info">
+                    <div>🌍 Current Demand: <b>{{ career.current_demand }}%</b></div>
+                    <div>📈 Future Demand: <b>{{ career.future_demand }}%</b></div>
+                </div>
+            </div>
+
+            <div class="career-card">
+                <h3>📌 Required Skills</h3>
+                <div class="skills-list required-skills">
+                    {% for skill in career.required[:5] %}
+                        <span>{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="career-card">
+                <h3>✨ Matched Skills</h3>
+                <div class="skills-list matched-skills">
+                    {% for skill in career.matched[:3] %}
+                        <span>{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="career-card">
+                <h3>❌ Missing Skills</h3>
+                <div class="skills-list missing-skills">
+                    {% for skill in career.missing[:3] %}
+                        <span>{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if career.roadmap %}
+            <div class="career-card">
+                <h3>📚 Learning Roadmap</h3>
+                <div class="roadmap">
+                    <ul>
+                        {% for skill, links in career.roadmap.items() %}
+                        <li>
+                            <b>{{ skill }}</b> → 
+                            <a href="{{ links[0] }}" target="_blank">Roadmap</a> | 
+                            <a href="{{ links[1] }}" target="_blank">Video</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="buttons">
+            <a href="{{ url_for('career_form') }}" class="try-again">🔁 Try Again</a>
+            <a href="/logout" class="logout">🚪 Logout</a>
+        </div>
+    </div>
+</body>
+</html>

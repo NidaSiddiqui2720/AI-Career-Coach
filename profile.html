@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #fff;
+  position: relative;
+}
+
+/* CSS Arrow */
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #fff; /* white arrow */
+  transition: transform 0.3s;
+}
+
+.profile-box.open .arrow {
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+.profile-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #1a1a1a;
+  padding: 10px;
+  border-radius: 8px;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 10;
+}
+
+  </style>
+</head>
+<body>
+ <!-- Navbar -->
+<div class="profile-box">
+  <div class="profile-header">
+    <img src="{{ url_for('static', filename='profile.png') }}" alt="Profile" class="profile-pic">
+    <span>{{ user.name if user else "Guest" }}</span>
+    <div class="arrow"></div> <!-- CSS arrow -->
+  </div>
+  <div class="profile-content">
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p>Role: {{ user.role }}</p>
+    <a href="{{ url_for('logout') }}"><button class="logout-btn">Logout</button></a>
+  </div>
+</div>
+<script>
+const profileHeader = document.querySelector('.profile-header');
+const profileBox = document.querySelector('.profile-box');
+const profileContent = document.querySelector('.profile-content');
+
+profileHeader.addEventListener('click', (e) => {
+  profileContent.style.display = profileContent.style.display === 'block' ? 'none' : 'block';
+  profileBox.classList.toggle('open');
+  e.stopPropagation();
+});
+
+profileContent.addEventListener('click', e => e.stopPropagation());
+
+document.addEventListener('click', () => {
+  profileContent.style.display = 'none';
+  profileBox.classList.remove('open');
+});
+
+</script>
+
+</body>
+</html>
